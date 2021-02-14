@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Caption for images</title>
+	<link rel="stylesheet" href="{{ url_for('static', filename='styles/reset.css') }}"/>
+	<link rel="stylesheet" href="{{ url_for('static', filename='styles/style.css') }}"/>
+	<link rel='icon' href="{{ url_for('static', filename='images/favicon.png') }}"/>
+	<script type="text/javascript">
+	    var images = new Array();
+	    var text = Array();
+	    var i = 0;
+
+	    images[0] = "{{ url_for('static', filename='images/angry_man.jpg') }}";
+	    images[1] = "{{ url_for('static', filename='images/apple.jpeg') }}";
+	    images[2] = "{{ url_for('static', filename='images/auto.jpg') }}";
+	    images[3] = "{{ url_for('static', filename='images/giraffe.jpg') }}";
+	    images[4] = "{{ url_for('static', filename='images/dog_cat.jpg') }}";
+	    text[0] = "A man is a dog in a dog. a dog."
+	    text[1] = "A large white of bananas sitting on a table...."
+	    text[2] = "A black and white photo of a train on."
+	    text[3] = "A giraffeaffe standing in a a tree of."
+	    text[4] = 'A cat is laying on a bed with a dog....'
+	     
+	    function viewImages() {
+	        document.getElementById("image").src = images[i];
+	        document.getElementById("caption").innerHTML = text[i]
+
+	        i++;
+	        if (i == images.length) {
+	            i = 0;
+	        }
+	        setTimeout("viewImages()",2000);
+	    }
+
+	    function showPreviewOne(event){
+	      if(event.target.files.length > 0){
+	        let src = URL.createObjectURL(event.target.files[0]);
+	        let preview = document.getElementById("file-ip-1-preview");
+	        preview.src = src;
+	        preview.style.display = "block";
+	      } 
+	    }
+
+	    function myImgRemoveFunctionOne() {
+	      document.getElementById("file-ip-1-preview").src = "https://i.ibb.co/ZVFsg37/default.png";
+	    }
+
+	    
+	</script>
+</head>
+<body>
+	<div>
+		<div id="header">
+			<div id="name">
+				<span>
+					GIGACAPT
+				</span>
+			</div>
+			<div id="">
+				
+			</div>
+		</div>
+		<div id="content">
+
+			<div id="images_with_captions">
+				<!-- здесь появляется одна из картинок и подпись к ней -->
+				<div id="box_image">
+					<img id="image" src="">
+				</div>
+				<div id="caption">
+					
+				</div>
+				<script> viewImages(); </script>
+			</div>
+
+			<div id="split"> </div>
+
+			<div id="technologie">
+				<div id="t_text"> <span> Image Caption Generator </span> </div>
+				<img id="t_image" src="{{ url_for('static', filename='images/model.png') }}">
+			</div>
+
+			<div id="go">
+				Please, upload a picture
+			</div>
+
+			<div class="center">
+				<form action="./handle" method="post" enctype="multipart/form-data">
+					<div class="form-input">
+						<label for="file-ip-1">
+							<img id="file-ip-1-preview" src={{ path|safe }}>
+							<button type="button" class="imgRemove" onclick="myImgRemoveFunctionOne()"></button>
+						</label>
+						<input type="file"  name="img_one" id="file-ip-1" onchange="showPreviewOne(event);">
+						<button type="submit" id="submit">Handle</button>
+					</div>
+				</form>
+			</div>
+			{{caption|safe}}
+
+		</div>
+
+		<div id="footer">
+			<div id="info">
+				<p>&#169; 2020 Gigaster All rights reserved</p>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
